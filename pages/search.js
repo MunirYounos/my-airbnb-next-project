@@ -1,15 +1,25 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-
+import { useRouter } from "next/dist/client/router";
+import {format } from "date-fns";
 
 function Search() {
+
+	const router = useRouter();
+	const { location, startDate, endDate, noOfGuests } = router.query;
+
+	const formatedStartDate = format(new Date(startDate), "dd MMMM yy");
+	const formatedEndDate = format(new Date(endDate), "dd MMMM yy");
+
+	const range = `${formatedStartDate} - ${formatedEndDate}`;
+
 	return (
 		<div>
-			<Header />
+			<Header placeholder={`${location} | ${range} | ${noOfGuests} guests`} />
 			<main className="flex">
-				<section className="flex-grow pt-14 px-6q">
-					<p>300+ Staus for 5 number of guests.</p>
-					<h1 className="text-3xl font-semibold mt-2 mb-5">Stays in Mars</h1>
+				<section className="flex-grow pt-14 px-6">
+					<p>300+ Stays for {noOfGuests} guests.</p>
+					<h1 className="text-3xl font-semibold mt-2 mb-5">Stays in {location}</h1>
 					<div className="hidden lg:inline-flex mb-5 space-x-3 text-gray-800 whitespace-nowrap">
 						<p className="button"> Cancellation Flexibility</p>
 						<p className="button"> Type of Place</p>
